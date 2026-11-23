@@ -835,7 +835,7 @@ const styles = StyleSheet.create({
   calendarEventTitle: {
     width: 42,
     color: '#D8CCFF',
-    fontSize: 7,
+    fontSize: 12,
     textAlign: 'center',
   },
   moreEvents: {
