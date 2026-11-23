@@ -26,5 +26,5 @@
       "expo-sqlite",
       "expo-secure-store"
     ]
-  }
+   }
 }
