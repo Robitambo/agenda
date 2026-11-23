@@ -18,15 +18,13 @@ import * as SecureStore from 'expo-secure-store';
 import { Calendar } from 'react-native-calendars';
 import { createClient, type Session } from '@supabase/supabase-js';
 
-// Inserisci qui i tuoi valori Supabase già usati nell'app.
-const SUPABASE_URL = 'https://zhgfsvsihuukmvpufnjh.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_ynzgm4OKyVsAUstWu-MtYw__EzJE-x4';
+const SUPABASE_URL = process.env.EXPO_PUBLIC_SUPABASE_URL ?? '';
+const SUPABASE_PUBLISHABLE_KEY =
+  process.env.EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? '';
 
 const configured =
   SUPABASE_URL.startsWith('https://') &&
-  !SUPABASE_URL.includes('INCOLLA_QUI') &&
-  SUPABASE_ANON_KEY.length > 20 &&
-  !SUPABASE_ANON_KEY.includes('INCOLLA_QUI');
+  SUPABASE_PUBLISHABLE_KEY.length > 20;
 
 const storage = {
   getItem: async (key: string): Promise<string | null> =>
@@ -52,7 +50,7 @@ const storage = {
 };
 
 const supabase = configured
-  ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  ? createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
       auth: {
         storage,
         autoRefreshToken: true,
@@ -140,8 +138,9 @@ export default function App() {
         <View style={styles.card}>
           <Text style={styles.title}>Configura Supabase</Text>
           <Text style={styles.muted}>
-            Inserisci l’URL e la chiave anon/public del tuo progetto nelle due
-            costanti all’inizio di App.tsx.
+            Imposta le variabili EXPO_PUBLIC_SUPABASE_URL e
+            EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY prima di avviare o compilare
+            l’app.
           </Text>
         </View>
       </SafeAreaView>
